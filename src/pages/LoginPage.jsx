@@ -1,49 +1,69 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import Input from '../components/Input/input';
+import Button from '../components/Button/button';
+import { login } from '../api/authApi';
 
 const LoginPage = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // Simple login validation (example)
-    if (username === "user" && password === "password123") {
-      navigate('/chat'); // Redirect to Chat page on successful login
-    } else {
-      setError("Invalid credentials, please try again.");
+    try {
+      await login(email, password);
+      if (rememberMe) {
+        localStorage.setItem('rememberMe', email);
+      } else {
+        localStorage.removeItem('rememberMe');
+      }
+      history.push('/dashboard');
+    } catch (err) {
+      setError('Invalid email or password.');
     }
   };
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+      <Navbar />
+      <div className="login-form">
+        <h2>Login</h2>
+        {error && <p className="error">{error}</p>}
+        <form onSubmit={handleLogin}>
+          <Input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
             required
           />
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
+          <Input
             type="password"
-            id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
             required
           />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      {error && <p className="error">{error}</p>}
+          <div className="remember-me">
+            <input
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+            />
+            <label>Remember Me</label>
+          </div>
+          <Button type="submit" label="Login" />
+        </form>
+        <p>
+          Don't have an account? <Link to="/signup">Sign Up</Link>
+        </p>
+      </div>
+      <Footer />
     </div>
   );
 };
