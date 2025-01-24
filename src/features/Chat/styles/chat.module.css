@@ -1,0 +1,22 @@
+.messageList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+  }
+  
+  .messageItem {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  .sender {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .text {
+    margin: 0;
+  }
+  

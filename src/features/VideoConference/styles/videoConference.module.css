@@ -1,0 +1,13 @@
+.participantList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+  }
+  
+  .participantItem {
+    background-color: #e0e0e0;
+    padding: 8px;
+    border-radius: 8px;
+  }
+  
