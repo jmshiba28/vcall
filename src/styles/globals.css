@@ -1,27 +1,236 @@
-/* Global styles for the application */
+/* Root Variables for Theme Customization */
+:root {
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+  --primary-active: #1e40af;
+  --secondary-color: #10b981;
+  --secondary-hover: #059669;
+  --secondary-active: #065f46;
+  --background-color: #f3f4f6;
+  --foreground-color: #ffffff;
+  --text-color: #1f2937;
+  --muted-text: #6b7280;
+  --border-color: #d1d5db;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --scrollbar-thumb: #d1d5db;
+  --scrollbar-track: transparent;
+
+  /* Dark Mode */
+  @media (prefers-color-scheme: dark) {
+      --background-color: #1f2937;
+      --foreground-color: #374151;
+      --text-color: #f9fafb;
+      --muted-text: #9ca3af;
+      --border-color: #4b5563;
+      --shadow-color: rgba(255, 255, 255, 0.1);
+      --scrollbar-thumb: #4b5563;
+      --scrollbar-track: #1f2937;
+  }
+}
+
+/* Base Styles */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+  transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+  color: var(--primary-hover);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 0.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+button:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+button:active {
+  background-color: var(--primary-active);
+  transform: translateY(0);
+}
+
+button:disabled {
+  background-color: var(--border-color);
+  cursor: not-allowed;
+  color: var(--muted-text);
+}
+
+input, textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  background-color: var(--foreground-color);
+  color: var(--text-color);
+}
+
+input:focus, textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Utility Classes */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.rounded {
+  border-radius: 0.5rem;
+}
+
+.shadow {
+  box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+.hidden {
+  display: none;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  html {
+      font-size: 14px;
   }
-  
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-  
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-  
+
   button {
-    font-family: inherit;
-    cursor: pointer;
+      padding: 0.6rem 1rem;
+      font-size: 0.9rem;
   }
-  
-  input, textarea {
-    font-family: inherit;
-  }
-  
+}
+
+/* Chat-Specific Styles */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--foreground-color);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.chat-header {
+  padding: 1rem;
+  background-color: var(--text-color);
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  background-color: var(--background-color);
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 3px;
+}
+
+/* Video-Specific Styles */
+.video-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: black;
+}
+
+.video-feed video {
+  max-width: 100%;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.video-feed video:hover {
+  transform: scale(1.02);
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--text-color);
+}
+
+.controls button {
+  background-color: var(--primary-color);
+  font-size: 1rem;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+}
+
+.controls button:hover {
+  background-color: var(--primary-hover);
+}
+
+.controls button:active {
+  background-color: var(--primary-active);
+}

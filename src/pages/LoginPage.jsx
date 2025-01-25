@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';  // Use useNavigate instead of useHistory
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Input from '../components/Input/input';
@@ -11,7 +11,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
-  const history = useHistory();
+  const navigate = useNavigate();  // Use useNavigate hook
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,7 +22,7 @@ const LoginPage = () => {
       } else {
         localStorage.removeItem('rememberMe');
       }
-      history.push('/dashboard');
+      navigate('/dashboard');  // Replace history.push with navigate
     } catch (err) {
       setError('Invalid email or password.');
     }

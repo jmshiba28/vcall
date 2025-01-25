@@ -1,20 +1,135 @@
-/* Dark and light theme definitions for the application */
+/* Default Theme Variables */
+:root {
+  --background-color: #ffffff;
+  --text-color: #333333;
+  --primary-color: #4a90e2;
+  --primary-hover: #357abd;
+  --secondary-color: #50e3c2;
+  --secondary-hover: #3cbfa1;
+  --border-color: #dddddd;
+  --muted-text: #666666;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --scrollbar-thumb: #cccccc;
+  --scrollbar-track: transparent;
+  --transition-speed: 0.3s;
+  --font-size-base: 16px;
+}
+
+/* Light Theme */
 :root[data-theme='light'] {
-    --background-color: #ffffff;
-    --text-color: #333333;
-    --primary-color: #4a90e2;
-    --secondary-color: #50e3c2;
+  --background-color: #f9fafb;
+  --text-color: #1f2937;
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
+  --secondary-color: #10b981;
+  --secondary-hover: #059669;
+  --border-color: #e5e7eb;
+  --muted-text: #6b7280;
+  --shadow-color: rgba(0, 0, 0, 0.05);
+  --scrollbar-thumb: #d1d5db;
+}
+
+/* Dark Theme */
+:root[data-theme='dark'] {
+  --background-color: #1e293b;
+  --text-color: #f9fafb;
+  --primary-color: #62a8f7;
+  --primary-hover: #3b82f6;
+  --secondary-color: #66f3d8;
+  --secondary-hover: #3cbfa1;
+  --border-color: #4b5563;
+  --muted-text: #9ca3af;
+  --shadow-color: rgba(255, 255, 255, 0.1);
+  --scrollbar-thumb: #4b5563;
+}
+
+/* High-Contrast Theme */
+:root[data-theme='high-contrast'] {
+  --background-color: #000000;
+  --text-color: #ffffff;
+  --primary-color: #ffcc00;
+  --primary-hover: #ffaa00;
+  --secondary-color: #00ff00;
+  --secondary-hover: #00cc00;
+  --border-color: #ffffff;
+  --muted-text: #cccccc;
+  --shadow-color: rgba(255, 255, 255, 0.5);
+  --scrollbar-thumb: #ffffff;
+}
+
+/* Base Styles */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-size: var(--font-size-base);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color var(--transition-speed);
+}
+
+a:hover {
+  color: var(--primary-hover);
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color var(--transition-speed), transform var(--transition-speed);
+  box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+button:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+button:disabled {
+  background-color: var(--border-color);
+  color: var(--muted-text);
+  cursor: not-allowed;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--scrollbar-track);
+}
+
+/* Responsive Font Sizes */
+html {
+  font-size: var(--font-size-base);
+}
+
+@media (max-width: 768px) {
+  html {
+      font-size: 14px;
   }
-  
-  :root[data-theme='dark'] {
-    --background-color: #1e1e1e;
-    --text-color: #ffffff;
-    --primary-color: #62a8f7;
-    --secondary-color: #66f3d8;
+}
+
+@media (max-width: 480px) {
+  html {
+      font-size: 12px;
   }
-  
-  body {
-    background-color: var(--background-color);
-    color: var(--text-color);
-  }
-  
+}
+
+/* Theme Toggle Transition */
+[data-theme] {
+  transition: all var(--transition-speed) ease-in-out;
+}
