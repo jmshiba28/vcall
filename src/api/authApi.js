@@ -1,10 +1,9 @@
-// Mock authentication functions (replace with real API requests)
-const usersDatabase = []; // This will simulate a user database
+// authapi.js
+const usersDatabase = []; // Simulating a user database
 
 export const login = async (email, password) => {
   const user = usersDatabase.find(u => u.email === email && u.password === password);
   if (!user) throw new Error('Invalid email or password.');
-  // Simulate setting user info after successful login (this can be replaced with actual token management)
   localStorage.setItem('user', JSON.stringify(user));
   return user;
 };
@@ -18,14 +17,19 @@ export const register = async (email, password, name) => {
 };
 
 export const logout = () => {
-  localStorage.removeItem('user'); // Remove user data from localStorage on logout
+  localStorage.removeItem('user');
 };
 
 export const getUser = () => {
   const user = localStorage.getItem('user');
-  return user ? JSON.parse(user) : null; // Return user info if authenticated
+  return user ? JSON.parse(user) : null;
 };
 
 export const isAuthenticated = () => {
-  return Boolean(localStorage.getItem('user')); // Check if there's a user in localStorage
+  return Boolean(localStorage.getItem('user'));
+};
+
+export const getAuthToken = () => {
+  const user = getUser();
+  return user ? user.token : null;
 };

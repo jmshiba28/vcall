@@ -1,6 +1,6 @@
-// src/components/LoadingSpinner.jsx
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../styles/global.css'; // Import global styles
 
 const LoadingSpinner = ({ size, color, type, message, className }) => {
   const spinnerSizeClass = size === 'small' ? 'w-6 h-6' : size === 'large' ? 'w-16 h-16' : 'w-8 h-8';

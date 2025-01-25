@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import '../styles/global.css'; // Import global styles
 
 const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

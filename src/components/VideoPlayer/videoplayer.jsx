@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
+import '../../styles/variables.css';
 
 const VideoPlayer = ({ stream, isMuted, className }) => {
   const videoRef = useRef();
@@ -15,7 +16,7 @@ const VideoPlayer = ({ stream, isMuted, className }) => {
       ref={videoRef}
       autoPlay
       muted={isMuted}
-      className={`rounded-lg ${className}`}
+      className={`video-player ${className}`}
     ></video>
   );
 };

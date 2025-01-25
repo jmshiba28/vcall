@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import '../../styles/variables.css';
 
 const Input = ({ value, onChange, placeholder, type = "text", className }) => {
   return (
@@ -8,7 +9,7 @@ const Input = ({ value, onChange, placeholder, type = "text", className }) => {
       value={value}
       onChange={onChange}
       placeholder={placeholder}
-      className={`px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 ${className}`}
+      className={`input ${className}`}
     />
   );
 };
