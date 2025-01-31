@@ -4,12 +4,17 @@ import '../../styles/variables.css';
 
 const ChatBubble = ({ message, sender, isMine }) => {
   return (
-    <div className={`chat-bubble ${isMine ? "mine" : "theirs"}`}>
-      <div className="bubble-content">
-        <p className="sender">{sender}</p>
-        <p className="message">{message}</p>
+    <>
+      <div className={`chat-bubble ${isMine ? "mine" : "theirs"}`}>
+        <div className="bubble-content">
+          <p className="sender">{sender}</p>
+          <p className="message">{message}</p>
+        </div>
       </div>
-    </div>
+      <div className="timestamp">
+        {new Date().toLocaleTimeString()}
+      </div>
+    </>
   );
 };
 

@@ -10,6 +10,7 @@ const Button = ({ onClick, label, type = "button", className }) => {
       className={`btn ${className}`}
     >
       {label}
+    <span className="icon">{/* Add icon here if needed */}</span>
     </button>
   );
 };

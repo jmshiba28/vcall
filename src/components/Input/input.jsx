@@ -5,6 +5,8 @@ import '../../styles/variables.css';
 const Input = ({ value, onChange, placeholder, type = "text", className }) => {
   return (
     <input
+      aria-label={placeholder}
+      aria-required={type === "text" ? "true" : "false"}
       type={type}
       value={value}
       onChange={onChange}
