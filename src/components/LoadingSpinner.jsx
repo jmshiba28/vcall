@@ -6,11 +6,9 @@ const LoadingSpinner = ({ size, color, type, message, className }) => {
   const spinnerSizeClass = size === 'small' ? 'w-6 h-6' : size === 'large' ? 'w-16 h-16' : 'w-8 h-8';
   const spinnerColorClass = color === 'primary' ? 'text-blue-600' : color === 'secondary' ? 'text-green-600' : 'text-gray-600';
   const spinnerTypeClass =
-    type === 'dots'
-      ? 'dot-spinner'
-      : type === 'circle'
-      ? 'animate-spin border-4 border-solid rounded-full border-t-transparent'
-      : 'circle';
+    type === 'dots' ? 'dot-spinner' :
+    type === 'circle' ? 'animate-spin border-4 border-solid rounded-full border-t-transparent' :
+    'circle';
 
   return (
     <div className={`flex flex-col items-center justify-center space-y-3 ${className}`}>

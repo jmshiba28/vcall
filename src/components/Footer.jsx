@@ -24,6 +24,9 @@ const Footer = () => {
           <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
             <i className="fab fa-linkedin-in"></i>
           </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
+            <i className="fab fa-instagram"></i>
+          </a>
         </div>
       </div>
     </footer>

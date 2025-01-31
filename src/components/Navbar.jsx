@@ -7,6 +7,19 @@ const Navbar = () => {
 
   // Simulate checking authentication (e.g., from localStorage or a global state)
   useEffect(() => {
+    const checkAuthStatus = () => {
+      // Simulate an API call to check authentication status
+      return new Promise((resolve) => {
+      setTimeout(() => {
+        const user = localStorage.getItem('user');
+        resolve(user ? true : false);
+      }, 1000);
+      });
+    };
+
+    checkAuthStatus().then((isAuth) => {
+      setIsAuthenticated(isAuth);
+    });
     const user = localStorage.getItem('user');
     if (user) {
       setIsAuthenticated(true);
