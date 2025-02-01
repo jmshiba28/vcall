@@ -1,22 +1,315 @@
+:root {
+  --message-bg-light: #f1f1f1;
+  --message-bg-dark: #222;
+  --sent-bg: #4caf50;
+  --received-bg: #007bff;
+  --text-color-light: #000;
+  --text-color-dark: #fff;
+  --border-radius: 12px;
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-dark: rgba(255, 255, 255, 0.1);
+}
+
 .messageList {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 15px;
+  max-height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--received-bg) transparent;
+}
+
+/* Sent & received messages */
+.messageItem {
+  display: flex;
+  align-items: flex-end;
+  max-width: 70%;
+  padding: 12px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 6px var(--shadow-light);
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Sent messages (current user) */
+.sent {
+  background: var(--sent-bg);
+  color: var(--text-color-dark);
+  align-self: flex-end;
+  border-bottom-right-radius: 0;
+}
+
+/* Received messages */
+.received {
+  background: var(--received-bg);
+  color: var(--text-color-dark);
+  align-self: flex-start;
+  border-bottom-left-radius: 0;
+}
+
+/* Sender name */
+.sender {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 3px;
+  opacity: 0.8;
+}
+
+/* Message text */
+.text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+/* Timestamp */
+.timestamp {
+  font-size: 12px;
+  margin-top: 4px;
+  opacity: 0.7;
+  align-self: flex-end;
+}
+
+/* Avatar for received messages */
+.avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-right: 8px;
+  box-shadow: 0 2px 4px var(--shadow-dark);
+}
+
+/* Animation for new messages */
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
   }
-  
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.messageItem {
+  animation: popIn 0.3s ease-in-out;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
   .messageItem {
-    background-color: #f1f1f1;
+    max-width: 85%;
     padding: 10px;
-    border-radius: 8px;
   }
-  
-  .sender {
-    font-weight: bold;
-    margin-bottom: 5px;
+}
+
+@media (max-width: 480px) {
+  .messageList {
+    padding: 10px;
   }
-  
-  .text {
-    margin: 0;
+  .messageItem {
+    max-width: 90%;
+    font-size: 14px;
   }
-  
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .messageList {
+    background: #121212;
+  }
+  .messageItem {
+    box-shadow: 0 4px 6px var(--shadow-dark);
+  }
+  .sent {
+    background: #388e3c;
+  }
+  .received {
+    background: #0056b3;
+  }
+}
+:root {
+  --message-bg-light: #f1f1f1;
+  --message-bg-dark: #222;
+  --sent-bg: #4caf50;
+  --received-bg: #007bff;
+  --text-color-light: #000;
+  --text-color-dark: #fff;
+  --border-radius: 12px;
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-dark: rgba(255, 255, 255, 0.1);
+}
+
+.chatContainer {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  width: 100%;
+  overflow: hidden;
+  background: var(--message-bg-light);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 6px var(--shadow-light);
+}
+
+/* Message list */
+.messageList {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 15px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--received-bg) transparent;
+}
+
+/* Sent & received messages */
+.messageItem {
+  display: flex;
+  align-items: flex-end;
+  max-width: 70%;
+  padding: 12px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 6px var(--shadow-light);
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Sent messages (current user) */
+.sent {
+  background: var(--sent-bg);
+  color: var(--text-color-dark);
+  align-self: flex-end;
+  border-bottom-right-radius: 0;
+}
+
+/* Received messages */
+.received {
+  background: var(--received-bg);
+  color: var(--text-color-dark);
+  align-self: flex-start;
+  border-bottom-left-radius: 0;
+}
+
+/* Sender name */
+.sender {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 3px;
+  opacity: 0.8;
+}
+
+/* Message text */
+.text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+/* Timestamp */
+.timestamp {
+  font-size: 12px;
+  margin-top: 4px;
+  opacity: 0.7;
+  align-self: flex-end;
+}
+
+/* Avatar for received messages */
+.avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-right: 8px;
+  box-shadow: 0 2px 4px var(--shadow-dark);
+}
+
+/* Input field for chat */
+.chatInputContainer {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-top: 1px solid #ddd;
+  background: var(--message-bg-light);
+}
+
+.chatInput {
+  flex-grow: 1;
+  padding: 10px;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 14px;
+  outline: none;
+  box-shadow: inset 0 2px 4px var(--shadow-light);
+}
+
+.sendButton {
+  background: var(--received-bg);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin-left: 10px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.sendButton:hover {
+  background: darken(var(--received-bg), 10%);
+}
+
+/* Animation for new messages */
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.messageItem {
+  animation: popIn 0.3s ease-in-out;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .messageItem {
+    max-width: 85%;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .messageList {
+    padding: 10px;
+  }
+  .messageItem {
+    max-width: 90%;
+    font-size: 14px;
+  }
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .chatContainer {
+    background: #121212;
+  }
+  .messageList {
+    background: #181818;
+  }
+  .messageItem {
+    box-shadow: 0 4px 6px var(--shadow-dark);
+  }
+  .sent {
+    background: #388e3c;
+  }
+  .received {
+    background: #0056b3;
+  }
+  .chatInputContainer {
+    background: #222;
+    border-top: 1px solid #444;
+  }
+}

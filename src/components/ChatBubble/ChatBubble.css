@@ -1,0 +1,82 @@
+/* Chat bubble container */
+.chat-bubble-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 10px 0;
+    max-width: 80%;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  /* Align self messages to right */
+  .mine {
+    justify-content: flex-end;
+    align-self: flex-end;
+  }
+  
+  .theirs {
+    justify-content: flex-start;
+    align-self: flex-start;
+  }
+  
+  /* Bubble styles */
+  .chat-bubble {
+    background: #f0f0f0;
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 18px;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    word-wrap: break-word;
+  }
+  
+  /* Customize for sender */
+  .mine .chat-bubble {
+    background: #007bff;
+    color: white;
+    text-align: right;
+  }
+  
+  .theirs .chat-bubble {
+    background: #e0e0e0;
+    color: black;
+  }
+  
+  /* Sender name */
+  .sender {
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 4px;
+  }
+  
+  /* Bubble footer */
+  .bubble-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    margin-top: 5px;
+  }
+  
+  /* Timestamp */
+  .timestamp {
+    font-size: 0.7rem;
+    color: #666;
+  }
+  
+  /* Message status */
+  .message-status {
+    display: flex;
+    align-items: center;
+    color: #bbb;
+    margin-left: 8px;
+  }
+  
+  .message-status.read {
+    color: #4CAF50; /* Green for read */
+  }
+  
