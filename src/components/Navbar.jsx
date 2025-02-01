@@ -1,63 +1,79 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import '../styles/global.css'; // Import global styles
+// import React, { useState, useEffect, useContext } from 'react';
+
+import React, { useState, useContext } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { AuthContext } from '../context/AuthContext';
+import { Menu, X } from 'lucide-react';
+import '../styles/Navbar.css';
 
 const Navbar = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  // Simulate checking authentication (e.g., from localStorage or a global state)
-  useEffect(() => {
-    const checkAuthStatus = () => {
-      // Simulate an API call to check authentication status
-      return new Promise((resolve) => {
-      setTimeout(() => {
-        const user = localStorage.getItem('user');
-        resolve(user ? true : false);
-      }, 1000);
-      });
-    };
-
-    checkAuthStatus().then((isAuth) => {
-      setIsAuthenticated(isAuth);
-    });
-    const user = localStorage.getItem('user');
-    if (user) {
-      setIsAuthenticated(true);
-    }
-  }, []);
+  const { isAuthenticated, logout } = useContext(AuthContext);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   const handleLogout = () => {
-    localStorage.removeItem('user'); // Remove user data on logout
-    setIsAuthenticated(false);
+    logout();
+    setIsDropdownOpen(false);
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen((prev) => !prev);
   };
 
   return (
-    <nav className="bg-blue-500 p-4">
-      <div className="flex justify-between items-center">
-        <h1 className="text-white text-xl font-bold">
+    <nav className="navbar">
+      <div className="navbar-container">
+        <h1 className="logo">
           <Link to="/">My Website</Link>
         </h1>
-        <ul className="flex space-x-6">
+
+        {/* Mobile Menu Icon */}
+        <button className="menu-icon" onClick={toggleMobileMenu}>
+          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+
+        <ul className={`nav-links ${isMobileMenuOpen ? 'open' : ''}`}>
           <li>
-            <Link to="/" className="text-white hover:text-gray-300">Home</Link>
+            <Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link>
           </li>
           <li>
-            <Link to="/about" className="text-white hover:text-gray-300">About</Link>
+            <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>About</Link>
           </li>
           <li>
-            <Link to="/contact" className="text-white hover:text-gray-300">Contact</Link>
+            <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>Contact</Link>
           </li>
+
           {isAuthenticated ? (
-            <li>
-              <button onClick={handleLogout} className="text-white hover:text-gray-300">Logout</button>
+            <li className="relative">
+              <button onClick={toggleDropdown} className="dropdown-toggle">Profile ▼</button>
+              <AnimatePresence>
+                {isDropdownOpen && (
+                  <motion.ul
+                    className="dropdown-menu"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                  >
+                    <li><Link to="/profile">Profile</Link></li>
+                    <li><Link to="/settings">Settings</Link></li>
+                    <li><button onClick={handleLogout}>Logout</button></li>
+                  </motion.ul>
+                )}
+              </AnimatePresence>
             </li>
           ) : (
             <>
               <li>
-                <Link to="/login" className="text-white hover:text-gray-300">Login</Link>
+                <Link to="/login" className={location.pathname === '/login' ? 'active' : ''}>Login</Link>
               </li>
               <li>
-                <Link to="/signup" className="text-white hover:text-gray-300">Sign Up</Link>
+                <Link to="/signup" className={location.pathname === '/signup' ? 'active' : ''}>Sign Up</Link>
               </li>
             </>
           )}
@@ -68,3 +84,43 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
+
+
+
+
+
+
+
+// AuthContext.js (Context for Authentication)
+
+
+// import { createContext, useState, useEffect } from 'react';
+
+// export const AuthContext = createContext();
+
+// export const AuthProvider = ({ children }) => {
+//   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+//   useEffect(() => {
+//     const user = localStorage.getItem('user');
+//     setIsAuthenticated(!!user);
+//   }, []);
+
+//   const login = (userData) => {
+//     localStorage.setItem('user', JSON.stringify(userData));
+//     setIsAuthenticated(true);
+//   };
+
+//   const logout = () => {
+//     localStorage.removeItem('user');
+//     setIsAuthenticated(false);
+//   };
+
+//   return (
+//     <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+//       {children}
+//     </AuthContext.Provider>
+//   );
+// };

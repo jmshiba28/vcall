@@ -1,81 +1,99 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import '../styles/global.css'; // Import global styles
+import React from "react";
+import PropTypes from "prop-types";
+import "../styles/global.css"; // Import global styles
 
 const LoadingSpinner = ({ size, color, type, message, className }) => {
-  const spinnerSizeClass = size === 'small' ? 'w-6 h-6' : size === 'large' ? 'w-16 h-16' : 'w-8 h-8';
-  const spinnerColorClass = color === 'primary' ? 'text-blue-600' : color === 'secondary' ? 'text-green-600' : 'text-gray-600';
-  const spinnerTypeClass =
-    type === 'dots' ? 'dot-spinner' :
-    type === 'circle' ? 'animate-spin border-4 border-solid rounded-full border-t-transparent' :
-    'circle';
+  const spinnerSize = {
+    small: "w-6 h-6",
+    medium: "w-10 h-10",
+    large: "w-16 h-16",
+  }[size];
+
+  const spinnerColor = {
+    primary: "text-blue-600",
+    secondary: "text-green-600",
+    tertiary: "text-gray-600",
+  }[color];
+
+  const renderSpinner = () => {
+    switch (type) {
+      case "dots":
+        return (
+          <div className="flex space-x-1">
+            {[...Array(3)].map((_, i) => (
+              <div
+                key={i}
+                className={`w-3 h-3 rounded-full bg-current animate-bounce`}
+                style={{ animationDelay: `${i * 0.2}s` }}
+              />
+            ))}
+          </div>
+        );
+      case "bars":
+        return (
+          <div className="flex space-x-1">
+            {[...Array(4)].map((_, i) => (
+              <div
+                key={i}
+                className={`w-2 h-6 bg-current animate-pulse`}
+                style={{ animationDelay: `${i * 0.15}s` }}
+              />
+            ))}
+          </div>
+        );
+      case "pulse":
+        return (
+          <div className="w-8 h-8 bg-current rounded-full animate-ping" />
+        );
+      case "circle":
+      default:
+        return (
+          <svg
+            className={`animate-spin ${spinnerSize} ${spinnerColor}`}
+            viewBox="0 0 50 50"
+            fill="none"
+            aria-hidden="true"
+          >
+            <circle
+              className="opacity-25"
+              cx="25"
+              cy="25"
+              r="20"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M25 5a20 20 0 0116.97 10.5A20 20 0 0125 45V5z"
+            />
+          </svg>
+        );
+    }
+  };
 
   return (
-    <div className={`flex flex-col items-center justify-center space-y-3 ${className}`}>
-      {/* Loading Spinner */}
-      <div
-        className={`${spinnerSizeClass} ${spinnerColorClass} ${spinnerTypeClass}`}
-        role="status"
-      ></div>
-      {/* Optional message */}
+    <div className={`flex flex-col items-center space-y-3 ${className}`} role="status" aria-live="polite">
+      {renderSpinner()}
       {message && <p className="text-sm text-gray-600">{message}</p>}
     </div>
   );
 };
 
-// Spinner Type CSS for Dot Spinner
-const dotSpinnerStyle = `
-@keyframes dot-spin {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0);
-  }
-}
-.dot-spinner {
-  display: flex;
-  gap: 4px;
-  justify-content: space-evenly;
-}
-.dot-spinner div {
-  width: 10px;
-  height: 10px;
-  background-color: currentColor;
-  border-radius: 50%;
-  animation: dot-spin 1s infinite ease-in-out;
-}
-.dot-spinner div:nth-child(1) {
-  animation-delay: 0s;
-}
-.dot-spinner div:nth-child(2) {
-  animation-delay: 0.2s;
-}
-.dot-spinner div:nth-child(3) {
-  animation-delay: 0.4s;
-}
-`;
-
-const styleSheet = document.styleSheets[0];
-styleSheet.insertRule(dotSpinnerStyle, styleSheet.cssRules.length);
-
 LoadingSpinner.propTypes = {
-  size: PropTypes.oneOf(['small', 'medium', 'large']),
-  color: PropTypes.oneOf(['primary', 'secondary', 'tertiary']),
-  type: PropTypes.oneOf(['dots', 'circle']),
+  size: PropTypes.oneOf(["small", "medium", "large"]),
+  color: PropTypes.oneOf(["primary", "secondary", "tertiary"]),
+  type: PropTypes.oneOf(["dots", "circle", "bars", "pulse"]),
   message: PropTypes.string,
   className: PropTypes.string,
 };
 
 LoadingSpinner.defaultProps = {
-  size: 'medium',
-  color: 'primary',
-  type: 'circle',
+  size: "medium",
+  color: "primary",
+  type: "circle",
   message: null,
-  className: '',
+  className: "",
 };
 
 export default LoadingSpinner;

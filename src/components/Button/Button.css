@@ -1,0 +1,63 @@
+/* Button styles */
+.btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    background-color: #007bff;
+    color: white;
+    width: fit-content;
+  }
+  
+  .btn:hover:not(.btn-disabled):not(.btn-loading) {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  .btn:active:not(.btn-disabled):not(.btn-loading) {
+    background-color: #004085;
+    transform: scale(0.98);
+  }
+  
+  /* Disabled state */
+  .btn-disabled {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+  }
+  
+  .btn-loading {
+    background-color: #007bff;
+    cursor: progress;
+  }
+  
+  .btn-icon {
+    margin-right: 8px;
+  }
+  
+  /* Loader style */
+  .loader {
+    animation: spin 1s linear infinite;
+    margin-right: 8px;
+  }
+  
+  /* Icon alignment */
+  .btn span.icon {
+    margin-left: 8px;
+  }
+  
+  /* Keyframes for spinner animation */
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
