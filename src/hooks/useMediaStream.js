@@ -1,30 +1,41 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
-const useMediaStream = (constraints) => {
+const useMediaStream = (initialConstraints) => {
   const [mediaStream, setMediaStream] = useState(null);
   const [error, setError] = useState(null);
+  const [constraints, setConstraints] = useState(initialConstraints);
+  const streamRef = useRef(null);
+
+  const getMediaStream = useCallback(async (newConstraints) => {
+    try {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+      }
+
+      const stream = await navigator.mediaDevices.getUserMedia(newConstraints);
+      setMediaStream(stream);
+      streamRef.current = stream;
+      setError(null);
+    } catch (err) {
+      console.error("Error accessing media devices:", err);
+      setError(err);
+      setMediaStream(null);
+    }
+  }, []);
 
   useEffect(() => {
-    const getMediaStream = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia(constraints);
-        setMediaStream(stream);
-      } catch (err) {
-        console.error("Error accessing media devices:", err);
-        setError(err);
-      }
-    };
-
-    getMediaStream();
+    if (constraints) {
+      getMediaStream(constraints);
+    }
 
     return () => {
-      if (mediaStream) {
-        mediaStream.getTracks().forEach((track) => track.stop());
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
       }
     };
-  }, [constraints]);
+  }, [constraints, getMediaStream]);
 
-  return { mediaStream, error };
+  return { mediaStream, error, setConstraints };
 };
 
 export default useMediaStream;
