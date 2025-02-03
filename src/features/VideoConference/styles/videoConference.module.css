@@ -1,13 +1,86 @@
+/* Container for the participant list */
 .participantList {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 10px;
-  }
-  
-  .participantItem {
-    background-color: #e0e0e0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Individual participant item */
+.participantItem {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  min-width: 150px;
+  max-width: 250px;
+  width: 100%;
+  text-align: center;
+  font-weight: 500;
+  font-size: 16px;
+  color: #333;
+  position: relative;
+}
+
+/* Hover effect */
+.participantItem:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Avatar for each participant */
+.participantAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  border: 2px solid #007bff;
+}
+
+/* Online status indicator */
+.participantItem::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: #28a745; /* Green for online */
+  border-radius: 50%;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: 2px solid white;
+}
+
+/* If the participant is offline */
+.participantOffline::after {
+  background-color: #dc3545 !important; /* Red for offline */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .participantList {
+    gap: 8px;
     padding: 8px;
-    border-radius: 8px;
   }
-  
+
+  .participantItem {
+    font-size: 14px;
+    padding: 10px;
+    min-width: 120px;
+  }
+
+  .participantAvatar {
+    width: 35px;
+    height: 35px;
+  }
+}
