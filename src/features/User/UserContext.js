@@ -33,10 +33,10 @@ const UserProvider = ({ children }) => {
   }, [loadUserFromLocalStorage]);
 
   // Set user and update localStorage
-  const setUserAndUpdateLocalStorage = (userData) => {
+  const setUserAndUpdateLocalStorage = useCallback((userData) => {
     setUser(userData);
     updateUserInLocalStorage(userData);
-  };
+  }, [updateUserInLocalStorage]);
 
   // Log out user and clear localStorage
   const logout = () => {
