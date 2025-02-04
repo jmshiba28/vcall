@@ -4,23 +4,23 @@ import { getRoomDetails, joinRoom, leaveRoom, startVideoCall, stopVideoCall } fr
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import LoadingSpinner from '../components/LoadingSpinner';
-import useWebSocket from '../hooks/useWebSocket';  // Correct import for default export
+import useWebSocket from '../hooks/useWebSocket';
+import { FaVideo, FaPhoneAlt, FaSignOutAlt, FaSignInAlt } from 'react-icons/fa'; // Icons for buttons
+import styles from '../styles/RoomPage.module.css'; // External Styles
 
 const RoomPage = () => {
-  const { roomid } = useParams();  // Get the roomid from the URL
-  const [roomDetails, setRoomDetails] = useState(null);  // To hold room data
-  const [isJoined, setIsJoined] = useState(false);  // Track if the user has joined the room
-  const [isLoading, setIsLoading] = useState(true);  // Loading state for room details
-  const [error, setError] = useState('');  // Error handling state
-  const [message, setMessage] = useState('');  // Message input state
-  const [messages, setMessages] = useState([]);  // List of messages
-  const [videoCallActive, setVideoCallActive] = useState(false);  // Video call state
+  const { roomid } = useParams();
+  const [roomDetails, setRoomDetails] = useState(null);
+  const [isJoined, setIsJoined] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
+  const [videoCallActive, setVideoCallActive] = useState(false);
+  const { messages: socketMessages, sendMessage } = useWebSocket(roomid);
+  const messageInputRef = useRef(null);
 
-  const { isConnected, messages: socketMessages, sendMessage } = useWebSocket(roomid);  // WebSocket custom hook to manage connection
-
-  const messageInputRef = useRef(null);  // For auto-focusing on the message input
-
-  // Fetch room details when the component mounts or when roomid changes
+  // Fetch room details
   useEffect(() => {
     const fetchRoomDetails = async () => {
       try {
@@ -36,7 +36,7 @@ const RoomPage = () => {
     fetchRoomDetails();
   }, [roomid]);
 
-  // Handle the logic for joining a room
+  // Join room
   const handleJoinRoom = async () => {
     try {
       await joinRoom(roomid);
@@ -46,7 +46,7 @@ const RoomPage = () => {
     }
   };
 
-  // Handle the logic for leaving the room
+  // Leave room
   const handleLeaveRoom = async () => {
     try {
       await leaveRoom(roomid);
@@ -56,12 +56,12 @@ const RoomPage = () => {
     }
   };
 
-  // Handle sending a message
+  // Send message
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (message.trim()) {
       try {
-        sendMessage(message);  // Send the message through WebSocket
+        sendMessage(message);
         setMessages((prevMessages) => [...prevMessages, { content: message, sender: 'You' }]);
         setMessage('');
       } catch (err) {
@@ -82,7 +82,7 @@ const RoomPage = () => {
     setVideoCallActive(false);
   };
 
-  // Update messages when new ones arrive from the WebSocket
+  // Handle incoming WebSocket messages
   useEffect(() => {
     if (socketMessages && socketMessages.length > 0) {
       setMessages((prevMessages) => [...prevMessages, ...socketMessages]);
@@ -90,32 +90,32 @@ const RoomPage = () => {
   }, [socketMessages]);
 
   if (isLoading) {
-    return <LoadingSpinner />;  // Display loading spinner while fetching room details
+    return <LoadingSpinner />;
   }
 
   return (
-    <div className="room-page">
+    <div className={styles.roomPage}>
       <Navbar />
-      <div className="room-content container">
-        {error && <p className="error">{error}</p>}
+      <div className={styles.container}>
+        {error && <p className={styles.error}>{error}</p>}
         {roomDetails && (
           <>
-            <h1 className="room-title">{roomDetails.name}</h1>
-            <p className="room-description">{roomDetails.description}</p>
+            <h1 className={styles.roomTitle}>{roomDetails.name}</h1>
+            <p className={styles.roomDescription}>{roomDetails.description}</p>
 
-            <div className="room-actions">
+            <div className={styles.actions}>
               {isJoined ? (
-                <button className="leave-button" onClick={handleLeaveRoom}>
-                  Leave Room
+                <button className={`${styles.leaveButton} ${styles.button}`} onClick={handleLeaveRoom}>
+                  <FaSignOutAlt /> Leave Room
                 </button>
               ) : (
-                <button className="join-button" onClick={handleJoinRoom}>
-                  Join Room
+                <button className={`${styles.joinButton} ${styles.button}`} onClick={handleJoinRoom}>
+                  <FaSignInAlt /> Join Room
                 </button>
               )}
             </div>
 
-            <div className="room-participants">
+            <div className={styles.participants}>
               <h3>Participants:</h3>
               <ul>
                 {roomDetails.participants.map((participant) => (
@@ -124,11 +124,11 @@ const RoomPage = () => {
               </ul>
             </div>
 
-            <div className="message-box">
+            <div className={styles.chatBox}>
               <h3>Chat:</h3>
-              <div className="messages">
+              <div className={styles.messages}>
                 {messages.map((msg, index) => (
-                  <div key={index} className="message">
+                  <div key={index} className={styles.message}>
                     <strong>{msg.sender}:</strong> {msg.content}
                   </div>
                 ))}
@@ -140,16 +140,23 @@ const RoomPage = () => {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Type a message"
+                  className={styles.messageInput}
                 />
-                <button type="submit">Send</button>
+                <button type="submit" className={styles.sendButton}>
+                  Send
+                </button>
               </form>
             </div>
 
-            <div className="video-call-actions">
+            <div className={styles.videoCallActions}>
               {videoCallActive ? (
-                <button onClick={handleStopVideoCall}>End Video Call</button>
+                <button className={`${styles.endCallButton} ${styles.button}`} onClick={handleStopVideoCall}>
+                  <FaPhoneAlt /> End Video Call
+                </button>
               ) : (
-                <button onClick={handleStartVideoCall}>Start Video Call</button>
+                <button className={`${styles.startCallButton} ${styles.button}`} onClick={handleStartVideoCall}>
+                  <FaVideo /> Start Video Call
+                </button>
               )}
             </div>
           </>

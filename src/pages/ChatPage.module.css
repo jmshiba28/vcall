@@ -1,0 +1,55 @@
+/* Chat Page Container */
+.chatContainer {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Chat Header */
+  .chatHeader {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+  
+  /* Error Message */
+  .error {
+    color: red;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  
+  /* Typing Indicator */
+  .typingIndicator {
+    font-size: 0.9rem;
+    color: #888;
+    text-align: left;
+    padding: 5px 0;
+  }
+  
+  /* Input Container */
+  .inputContainer {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  /* Dark Mode Support */
+  @media (prefers-color-scheme: dark) {
+    .chatContainer {
+      --bg-color: #1e1e1e;
+      --text-color: #ffffff;
+    }
+  }
+  
+  @media (prefers-color-scheme: light) {
+    .chatContainer {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+    }
+  }
+  

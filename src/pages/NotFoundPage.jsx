@@ -1,38 +1,42 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { FaHome } from 'react-icons/fa'; // For Home icon
+import styles from '../styles/NotFoundPage.module.css'; // External Styles
 
 const NotFoundPage = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+    <div className={styles.notFoundContainer}>
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="text-center"
+        className={styles.content}
       >
-        <h1 className="text-7xl font-bold text-red-500 mb-4">404</h1>
-        <h2 className="text-2xl font-semibold text-gray-800 mb-2">Oops! Page Not Found</h2>
-        <p className="text-gray-600 mb-6">
+        <h1 className={styles.errorCode}>404</h1>
+        <h2 className={styles.title}>Oops! Page Not Found</h2>
+        <p className={styles.message}>
           The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
         </p>
         <Link
           to="/"
-          className="px-6 py-3 text-white bg-blue-500 rounded-lg shadow-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 focus:outline-none transition"
+          className={styles.goHomeButton}
         >
+          <FaHome className="mr-2" />
           Go Back to Home
         </Link>
       </motion.div>
+
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.2, delay: 0.4 }}
-        className="mt-10"
+        className={styles.imageContainer}
       >
         <img
-          src="https://via.placeholder.com/400x300" // Replace with your custom 404 illustration URL
+          src="https://via.placeholder.com/600x400" // Replace with custom 404 image URL
           alt="Not Found Illustration"
-          className="w-full max-w-md mx-auto"
+          className={styles.image}
         />
       </motion.div>
     </div>

@@ -1,0 +1,98 @@
+/* Login Container */
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+    background-color: #f7f7f7;
+  }
+  
+  /* Login Form */
+  .loginForm {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin-top: 50px;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    color: #333;
+  }
+  
+  /* Error Message */
+  .error {
+    color: #e74c3c;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  /* Input Fields */
+  input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+  
+  input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  /* Remember Me Section */
+  .rememberMe {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .rememberMe input {
+    margin-right: 10px;
+  }
+  
+  /* Buttons */
+  button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover:enabled {
+    background-color: #0056b3;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Links */
+  .links {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .link {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+  
+  .link:hover {
+    text-decoration: underline;
+  }
+  

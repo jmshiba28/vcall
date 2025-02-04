@@ -1,0 +1,76 @@
+/* Container */
+.notFoundContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f7fafc;
+    text-align: center;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Content Section */
+  .content {
+    max-width: 600px;
+    margin-bottom: 40px;
+  }
+  
+  .errorCode {
+    font-size: 6rem;
+    font-weight: bold;
+    color: #e74c3c;
+    margin-bottom: 20px;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 16px;
+  }
+  
+  .message {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 24px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Go Back Button */
+  .goHomeButton {
+    display: inline-flex;
+    align-items: center;
+    background-color: #3498db;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .goHomeButton:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+  }
+  
+  .goHomeButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.5);
+  }
+  
+  /* Image Section */
+  .imageContainer {
+    margin-top: 40px;
+  }
+  
+  .image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+  

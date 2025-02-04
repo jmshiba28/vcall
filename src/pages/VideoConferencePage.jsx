@@ -2,27 +2,48 @@ import React, { useState } from 'react';
 import { VideoLayout } from '../layouts/VideoLayout';
 import { startVideoConference } from '../api/videoApi';
 import { motion } from 'framer-motion';
+import { FaVideo, FaStopCircle } from 'react-icons/fa'; // Video call icons
+import { toast } from 'react-toastify'; // For notifications
 
 const VideoConferencePage = () => {
   const [videoStarted, setVideoStarted] = useState(false);
-  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const maxRetries = 3;
 
+  // Start video conference with retries
   const handleStartVideoConference = async () => {
     setIsLoading(true);
     setError('');
     try {
-      const result = await startVideoConference("user123"); // Example user ID
-      if (result) {
-        setVideoStarted(true);
-      } else {
-        setError("Failed to start the video conference.");
-      }
-    } catch (error) {
-      setError("An error occurred while starting the video conference.");
+      await startConferenceWithRetry();
+    } catch (err) {
+      setError('An error occurred while starting the video conference.');
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const startConferenceWithRetry = async () => {
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        const result = await startVideoConference("user123"); // Example user ID
+        if (result) {
+          setVideoStarted(true);
+          toast.success('Video conference started successfully!', { autoClose: 3000 });
+          return;
+        }
+      } catch (error) {
+        if (attempt === maxRetries) {
+          throw new Error("Failed to start video conference after multiple attempts.");
+        }
+      }
+    }
+  };
+
+  const handleEndVideoConference = () => {
+    setVideoStarted(false);
+    toast.info('Video conference ended.', { autoClose: 3000 });
   };
 
   return (
@@ -42,7 +63,12 @@ const VideoConferencePage = () => {
             className="bg-gray-100 p-6 rounded-lg shadow-md"
           >
             <p className="text-lg text-green-600 font-medium">Video conference has started!</p>
-            {/* Render video conference UI */}
+            <button
+              onClick={handleEndVideoConference}
+              className="mt-4 px-6 py-3 rounded-lg text-white font-semibold bg-red-500 hover:bg-red-600 focus:ring-2 focus:ring-red-300"
+            >
+              <FaStopCircle className="mr-2" /> End Video Conference
+            </button>
           </motion.div>
         ) : (
           <motion.div
@@ -56,10 +82,13 @@ const VideoConferencePage = () => {
               onClick={handleStartVideoConference}
               disabled={isLoading}
               className={`px-6 py-3 rounded-lg text-white font-semibold shadow-md transition ${
-                isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-blue-300'
+                isLoading
+                  ? 'bg-gray-400 cursor-not-allowed'
+                  : 'bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-blue-300'
               }`}
             >
               {isLoading ? 'Starting...' : 'Start Video Conference'}
+              <FaVideo className="ml-2" />
             </button>
           </motion.div>
         )}

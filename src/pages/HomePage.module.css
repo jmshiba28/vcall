@@ -1,0 +1,146 @@
+/* Home Container */
+.homeContainer {
+    font-family: "Arial", sans-serif;
+    text-align: center;
+    color: var(--text-color);
+    background: var(--bg-color);
+    padding-bottom: 50px;
+  }
+  
+  /* Hero Section */
+  .heroSection {
+    background: linear-gradient(to right, #007bff, #6610f2);
+    color: white;
+    padding: 80px 20px;
+    border-radius: 10px;
+  }
+  
+  .heroTitle {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  
+  .heroSubtitle {
+    font-size: 1.2rem;
+    margin-top: 10px;
+  }
+  
+  .heroButtons {
+    margin-top: 20px;
+  }
+  
+  .btnPrimary,
+  .btnSecondary {
+    display: inline-block;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .btnPrimary {
+    background: #ff4081;
+    color: white;
+    margin-right: 10px;
+  }
+  
+  .btnSecondary {
+    background: #4caf50;
+    color: white;
+  }
+  
+  .btnPrimary:hover,
+  .btnSecondary:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Features Section */
+  .featuresSection {
+    margin-top: 50px;
+  }
+  
+  .sectionTitle {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .featuresGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 0 20px;
+  }
+  
+  .featureCard {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .featureCard:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Testimonials Section */
+  .testimonialsSection {
+    background: #f0f2f5;
+    padding: 50px 20px;
+    margin-top: 50px;
+  }
+  
+  .testimonialsGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .testimonialCard {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    max-width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .quote {
+    font-size: 1rem;
+    font-style: italic;
+  }
+  
+  .author {
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  /* Call to Action Section */
+  .ctaSection {
+    margin-top: 50px;
+  }
+  
+  .ctaSubtitle {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    .homeContainer {
+      --bg-color: #121212;
+      --text-color: #ffffff;
+    }
+  
+    .featureCard {
+      background: #222;
+    }
+  }
+  
+  @media (prefers-color-scheme: light) {
+    .homeContainer {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+    }
+  }
+  
