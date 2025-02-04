@@ -1,0 +1,70 @@
+/* Layout Container */
+.videoLayout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Navbar/Header */
+  .navbar {
+    background: var(--primary-color);
+    padding: 16px;
+    color: white;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  /* Video Grid */
+  .videoGrid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+  /* Video Controls */
+  .videoControls {
+    background: var(--primary-color);
+    padding: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  /* Dark Mode Support */
+  @media (prefers-color-scheme: dark) {
+    .videoLayout {
+      --bg-color: #1e1e1e;
+      --text-color: #ffffff;
+      --primary-color: #333;
+    }
+  }
+  
+  /* Light Mode */
+  @media (prefers-color-scheme: light) {
+    .videoLayout {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --primary-color: #3498db;
+    }
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .videoGrid {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      padding: 10px;
+    }
+  
+    .videoControls {
+      flex-wrap: wrap;
+    }
+  }
+  

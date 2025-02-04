@@ -1,0 +1,60 @@
+/* Main layout container */
+.mainLayout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Header Styles */
+  .header {
+    background: var(--primary-color);
+    padding: 16px;
+    color: white;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  /* Main Content Section */
+  .mainContent {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+  /* Footer Styles */
+  .footer {
+    background: var(--primary-color);
+    padding: 10px;
+    color: white;
+    text-align: center;
+  }
+  
+  /* Dark Mode Support */
+  @media (prefers-color-scheme: dark) {
+    .mainLayout {
+      --bg-color: #1e1e1e;
+      --text-color: #ffffff;
+      --primary-color: #333;
+    }
+  }
+  
+  /* Light Mode */
+  @media (prefers-color-scheme: light) {
+    .mainLayout {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --primary-color: #3498db;
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .mainContent {
+      padding: 10px;
+    }
+  }
+  
