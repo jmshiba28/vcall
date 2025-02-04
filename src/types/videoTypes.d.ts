@@ -11,11 +11,15 @@ export interface Participant {
   isSharingScreen?: boolean; // Indicates if the participant is sharing their screen
   isRaisedHand?: boolean; // Indicates if the participant has raised their hand
   reactions?: Reaction[]; // Array of reactions (e.g., emojis) from the participant
+  isSpeaking?: boolean; // Indicates if the participant is currently speaking
+  chatMessages?: ChatMessage[]; // Chat messages sent by the participant
+  connectionStats?: ConnectionStats; // Real-time network stats for the participant
 }
 
 export interface Reaction {
   emoji: string; // Emoji used for the reaction
   timestamp: Date; // Time when the reaction was added
+  participantId: string; // ID of the participant who added the reaction
 }
 
 export interface VideoRoom {
@@ -31,6 +35,7 @@ export interface VideoRoom {
   chatMessages?: ChatMessage[]; // Array of chat messages exchanged in the room
   polls?: Poll[]; // Array of polls conducted in the room
   breakoutRooms?: BreakoutRoom[]; // Array of breakout rooms (if applicable)
+  isLiveStreamed?: boolean; // Indicates if the room is being live-streamed
 }
 
 export interface VideoRoomSettings {
@@ -39,7 +44,11 @@ export interface VideoRoomSettings {
   enableScreenSharing: boolean; // Indicates if screen sharing is enabled
   enableReactions: boolean; // Indicates if reactions are enabled
   enableRecording: boolean; // Indicates if recording is enabled
+  enableLiveStreaming: boolean; // Indicates if live streaming is enabled
   defaultRole: 'participant' | 'guest'; // Default role assigned to new participants
+  autoMuteNewParticipants: boolean; // Whether new participants should be muted by default
+  allowUnmuting: boolean; // Whether participants can unmute themselves
+  allowVideoToggle: boolean; // Whether participants can toggle their video
 }
 
 export interface ChatMessage {
@@ -48,6 +57,9 @@ export interface ChatMessage {
   content: string; // Content of the message
   timestamp: Date; // Time when the message was sent
   isSystemMessage?: boolean; // Indicates if the message is a system message (e.g., "User joined")
+  isPrivate?: boolean; // Indicates if the message was sent privately (to a specific participant)
+  isEdited?: boolean; // Whether the message has been edited
+  editedTimestamp?: Date; // Timestamp when the message was edited
 }
 
 export interface Poll {
@@ -58,6 +70,7 @@ export interface Poll {
   isAnonymous: boolean; // Indicates if the poll is anonymous
   createdAt: Date; // Timestamp when the poll was created
   results?: PollResult[]; // Array of poll results (optional)
+  isActive: boolean; // Indicates if the poll is currently active
 }
 
 export interface PollOption {
@@ -75,6 +88,8 @@ export interface BreakoutRoom {
   name: string; // Name of the breakout room
   participants: Participant[]; // Array of participants in the breakout room
   createdAt: Date; // Timestamp when the breakout room was created
+  isLocked: boolean; // Indicates if the breakout room is locked
+  hostId: string; // ID of the host for the breakout room
 }
 
 export interface ScreenSharing {
@@ -82,6 +97,7 @@ export interface ScreenSharing {
   stream: MediaStream; // Media stream of the shared screen
   startedAt: Date; // Timestamp when screen sharing started
   isActive: boolean; // Indicates if screen sharing is currently active
+  screenId?: string; // Unique identifier for the screen being shared (optional)
 }
 
 export interface Recording {
@@ -90,11 +106,14 @@ export interface Recording {
   startedAt: Date; // Timestamp when recording started
   endedAt?: Date; // Timestamp when recording ended (optional)
   downloadUrl?: string; // URL to download the recording (optional)
+  cloudStorageUrl?: string; // Cloud storage URL where the recording is stored (optional)
+  isProcessing?: boolean; // Indicates if the recording is still being processed
 }
 
 export interface TypingIndicator {
   participantId: string; // ID of the participant typing in chat
   isTyping: boolean; // Indicates if the participant is typing
+  timestamp: Date; // Time when the typing status was updated
 }
 
 export interface ConnectionStats {
@@ -103,4 +122,16 @@ export interface ConnectionStats {
   latency: number; // Latency in milliseconds
   bitrate: number; // Bitrate in kbps
   packetLoss: number; // Packet loss percentage
+  jitter?: number; // Jitter in milliseconds (optional)
+  frameRate?: number; // Frame rate of the video stream (optional)
+}
+
+export interface LiveStream {
+  id: string; // Unique identifier for the live stream
+  streamUrl: string; // URL to view the live stream
+  startedAt: Date; // Timestamp when the live stream started
+  endedAt?: Date; // Timestamp when the live stream ended
+  participants: Participant[]; // Participants actively viewing the stream
+  chatMessages?: ChatMessage[]; // Chat messages exchanged during the live stream
+  isRecording: boolean; // Whether the live stream is being recorded
 }
