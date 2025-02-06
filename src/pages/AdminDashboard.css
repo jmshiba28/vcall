@@ -1,0 +1,47 @@
+.admin-dashboard {
+    padding: 20px;
+    background-color: #f4f6f9;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .dashboard-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .dashboard-header h1 {
+    color: #333;
+    font-size: 2.5rem;
+  }
+  
+  .dashboard-header p {
+    color: #666;
+    font-size: 1rem;
+  }
+  
+  .dashboard-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  
+  .stats-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+  }
+  
+  .activity-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .dashboard-content {
+      grid-template-columns: 1fr;
+    }
+  }
+  
