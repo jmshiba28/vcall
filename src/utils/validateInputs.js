@@ -9,39 +9,65 @@ export const validateEmail = (email) => {
     console.error('Invalid input provided to validateEmail:', email);
     return false;
   }
+
   const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return regex.test(email.trim());
 };
 
 /**
- * Utility function to validate a name.
+ * Utility function to validate a person's name.
  *
  * @param {string} name - The name to validate.
- * @param {number} [minLength=3] - Minimum length for a valid name.
+ * @param {Object} options - Validation options.
+ * @param {number} [options.minLength=2] - Minimum length for a valid name.
+ * @param {boolean} [options.allowHyphens=true] - Whether to allow hyphenated names.
  * @returns {boolean} - Returns true if the name is valid, otherwise false.
  */
-export const validateName = (name, minLength = 3) => {
+export const validateName = (
+  name,
+  options = {}
+) => {
+  const { minLength = 2, allowHyphens = true } = options;
+
   if (typeof name !== 'string' || !name.trim()) {
     console.error('Invalid input provided to validateName:', name);
     return false;
   }
-  return name.trim().length >= minLength && /^[a-zA-Z\s]+$/.test(name);
+
+  // Regex for validating names (supports letters, spaces, and optionally hyphens)
+  const regex = allowHyphens ? /^[a-zA-Z\s-]+$/ : /^[a-zA-Z\s]+$/;
+  return name.trim().length >= minLength && regex.test(name);
 };
 
 /**
  * Utility function to validate a password.
  *
  * @param {string} password - The password to validate.
- * @param {number} [minLength=8] - Minimum length for a valid password.
+ * @param {Object} options - Validation options.
+ * @param {number} [options.minLength=8] - Minimum length for the password.
+ * @param {boolean} [options.requireUppercase=true] - Require at least one uppercase letter.
+ * @param {boolean} [options.requireNumber=true] - Require at least one number.
+ * @param {boolean} [options.requireSpecialChar=true] - Require at least one special character.
  * @returns {boolean} - Returns true if the password is valid, otherwise false.
  */
-export const validatePassword = (password, minLength = 8) => {
+export const validatePassword = (
+  password,
+  options = {}
+) => {
+  const { minLength = 8, requireUppercase = true, requireNumber = true, requireSpecialChar = true } = options;
+
   if (typeof password !== 'string' || !password.trim()) {
     console.error('Invalid input provided to validatePassword:', password);
     return false;
   }
-  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  return password.length >= minLength && regex.test(password);
+
+  let regexString = `^.{${minLength},}$`; // Ensures minimum length
+  if (requireUppercase) regexString = `(?=.*[A-Z])` + regexString;
+  if (requireNumber) regexString = `(?=.*\\d)` + regexString;
+  if (requireSpecialChar) regexString = `(?=.*[@$!%*?&])` + regexString;
+
+  const regex = new RegExp(regexString);
+  return regex.test(password);
 };
 
 /**
@@ -55,7 +81,9 @@ export const validatePhoneNumber = (phoneNumber) => {
     console.error('Invalid input provided to validatePhoneNumber:', phoneNumber);
     return false;
   }
-  const regex = /^\+?[1-9]\d{1,14}$/; // E.164 international phone number format
+
+  // Supports E.164 international format (e.g., +1234567890)
+  const regex = /^\+?[1-9]\d{1,14}$/;
   return regex.test(phoneNumber.trim());
 };
 
@@ -70,7 +98,9 @@ export const validateURL = (url) => {
     console.error('Invalid input provided to validateURL:', url);
     return false;
   }
-  const regex = /^(https?:\/\/)?([\w-]+\.)+[a-z]{2,6}(\/[\w-._~:/?#[\]@!$&'()*+,;=]*)?$/i;
+
+  const regex =
+    /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[\w-._~:/?#[\]@!$&'()*+,;=]*)?$/i;
   return regex.test(url.trim());
 };
 
@@ -78,13 +108,21 @@ export const validateURL = (url) => {
  * Utility function to validate general text input (e.g., comments, messages).
  *
  * @param {string} text - The text to validate.
- * @param {number} [maxLength=500] - Maximum allowed length for the text.
+ * @param {Object} options - Validation options.
+ * @param {number} [options.maxLength=500] - Maximum allowed length for the text.
+ * @param {boolean} [options.allowEmpty=false] - Whether to allow empty text.
  * @returns {boolean} - Returns true if the text is valid, otherwise false.
  */
-export const validateText = (text, maxLength = 500) => {
+export const validateText = (
+  text,
+  options = {}
+) => {
+  const { maxLength = 500, allowEmpty = false } = options;
+
   if (typeof text !== 'string') {
     console.error('Invalid input provided to validateText:', text);
     return false;
   }
-  return text.trim().length > 0 && text.trim().length <= maxLength;
+
+  return (allowEmpty || text.trim().length > 0) && text.trim().length <= maxLength;
 };

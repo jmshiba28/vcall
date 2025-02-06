@@ -1,40 +1,67 @@
-// Base API URL
-export const API_URL = 'https://api.example.com';
+// Configuration File for VideoConnect App
 
-// App Settings
-export const APP_NAME = 'VideoConnect'; // Name of the application
-export const MAX_MESSAGE_LENGTH = 1000; // Maximum length for a chat message
-export const DEFAULT_THEME = 'light'; // Default application theme ('light' or 'dark')
-export const SUPPORTED_LANGUAGES = ['en', 'fr', 'es', 'de']; // List of supported languages
+// ===============================
+// 📌 Base API Configuration
+// ===============================
+const ENV = process.env.NODE_ENV || 'development';
+export const API_URL = ENV === 'production' ? 'https://api.example.com' : 'http://localhost:5000';
 
-// Timeouts and Intervals
-export const CONNECTION_TIMEOUT = 10000; // Timeout for API requests (in ms)
-export const HEARTBEAT_INTERVAL = 30000; // Interval for socket heartbeat (in ms)
+// ===============================
+// 🔧 App Settings
+// ===============================
+export const APP_CONFIG = {
+  NAME: 'VideoConnect',
+  DEFAULT_THEME: 'light',
+  SUPPORTED_LANGUAGES: ['en', 'fr', 'es', 'de'],
+  MAX_MESSAGE_LENGTH: 1000,
+};
 
-// Socket Events
-export const SOCKET_EVENTS = {
+// ===============================
+// ⏳ Timeouts & Intervals
+// ===============================
+export const TIMEOUTS = {
+  CONNECTION: 10_000, // API request timeout in ms
+  HEARTBEAT: 30_000, // Interval for socket heartbeat in ms
+};
+
+// ===============================
+// 🔌 WebSocket Events
+// ===============================
+export const SOCKET_EVENTS = Object.freeze({
   NEW_MESSAGE: 'newMessage',
   USER_JOINED: 'userJoined',
   USER_LEFT: 'userLeft',
-  START_SCREEN_SHARE: 'startScreenShare',
-  STOP_SCREEN_SHARE: 'stopScreenShare',
+  SCREEN_SHARE_START: 'startScreenShare',
+  SCREEN_SHARE_STOP: 'stopScreenShare',
   TYPING_STARTED: 'typingStarted',
   TYPING_STOPPED: 'typingStopped',
   ROOM_LOCKED: 'roomLocked',
   ROOM_UNLOCKED: 'roomUnlocked',
-};
+});
 
-// API Endpoints
+// ===============================
+// 🔗 API Endpoints
+// ===============================
 export const API_ENDPOINTS = {
-  LOGIN: `${API_URL}/auth/login`,
-  REGISTER: `${API_URL}/auth/register`,
-  FETCH_USER: `${API_URL}/users/me`,
-  FETCH_PARTICIPANTS: `${API_URL}/rooms/participants`,
-  SEND_MESSAGE: `${API_URL}/messages/send`,
-  CREATE_ROOM: `${API_URL}/rooms/create`,
+  AUTH: {
+    LOGIN: `${API_URL}/auth/login`,
+    REGISTER: `${API_URL}/auth/register`,
+  },
+  USERS: {
+    ME: `${API_URL}/users/me`,
+    PARTICIPANTS: `${API_URL}/rooms/participants`,
+  },
+  MESSAGES: {
+    SEND: `${API_URL}/messages/send`,
+  },
+  ROOMS: {
+    CREATE: `${API_URL}/rooms/create`,
+  },
 };
 
-// Roles and Permissions
+// ===============================
+// 🔑 Roles & Permissions
+// ===============================
 export const USER_ROLES = {
   ADMIN: 'admin',
   MODERATOR: 'moderator',
@@ -50,47 +77,83 @@ export const PERMISSIONS = {
   SEND_MESSAGES: 'send_messages',
 };
 
-// Notification Types
-export const NOTIFICATION_TYPES = {
-  INFO: 'info',
-  SUCCESS: 'success',
-  WARNING: 'warning',
-  ERROR: 'error',
+// ===============================
+// 📢 Notification Types
+// ===============================
+export const NOTIFICATION_TYPES = ['info', 'success', 'warning', 'error'];
+
+// ===============================
+// 🎭 Reactions
+// ===============================
+export const REACTIONS = ['👍', '🎉', '❤️', '😂', '😮', '😢', '👏', '🔥'];
+
+// ===============================
+// 📊 Poll Settings
+// ===============================
+export const POLL_CONFIG = {
+  MAX_OPTIONS: 10,
+  ALLOW_ANONYMOUS_VOTING: true,
 };
 
-// Reactions
-export const REACTIONS = ['👍', '🎉', '❤️', '😂', '😮', '😢', '👏', '🔥']; // Default reactions for chat
-
-// Poll Settings
-export const POLL_SETTINGS = {
-  MAX_OPTIONS: 10, // Maximum number of options in a poll
-  ALLOW_ANONYMOUS_VOTING: true, // Allow anonymous voting by default
-};
-
-// Video Room Settings
+// ===============================
+// 🎥 Video Room Settings
+// ===============================
 export const VIDEO_ROOM_SETTINGS = {
-  MAX_PARTICIPANTS: 50, // Maximum participants in a video room
-  ENABLE_CHAT: true, // Enable chat by default
-  ENABLE_SCREEN_SHARING: true, // Enable screen sharing by default
-  ENABLE_REACTIONS: true, // Enable reactions in video rooms
-  DEFAULT_ROLE: USER_ROLES.PARTICIPANT, // Default role assigned to new participants
+  MAX_PARTICIPANTS: 50,
+  ENABLE_CHAT: true,
+  ENABLE_SCREEN_SHARING: true,
+  ENABLE_REACTIONS: true,
+  DEFAULT_ROLE: USER_ROLES.PARTICIPANT,
 };
 
-// Default Avatar
+// ===============================
+// 🖼️ Default Avatar
+// ===============================
 export const DEFAULT_AVATAR_URL = 'https://cdn.example.com/default-avatar.png';
 
-// Regex Patterns
+// ===============================
+// 🔍 Regex Patterns
+// ===============================
 export const REGEX_PATTERNS = {
-  EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, // Pattern to validate email addresses
-  USERNAME: /^[a-zA-Z0-9_]{3,15}$/, // Pattern for valid usernames (3-15 characters, letters, numbers, underscores)
+  EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, // Valid email pattern
+  USERNAME: /^[a-zA-Z0-9_]{3,15}$/, // Valid usernames (3-15 chars, letters, numbers, underscores)
+  PASSWORD: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+]{8,}$/, // Min 8 chars, at least one letter & number
 };
 
-// Date and Time Formats
+// ===============================
+// 🗓️ Date & Time Formats
+// ===============================
 export const DATE_FORMATS = {
-  DISPLAY_DATE: 'MMMM D, YYYY', // Format for displaying dates
-  DISPLAY_TIME: 'h:mm A', // Format for displaying times
-  FULL_DATE_TIME: 'YYYY-MM-DDTHH:mm:ssZ', // ISO format for date and time
+  DISPLAY_DATE: 'MMMM D, YYYY',
+  DISPLAY_TIME: 'h:mm A',
+  FULL_DATE_TIME: 'YYYY-MM-DDTHH:mm:ssZ',
 };
 
-// Debugging
-export const IS_DEBUG_MODE = process.env.NODE_ENV === 'development'; // Enable debug mode in development environment
+// ===============================
+// 🛠️ Debugging Mode
+// ===============================
+export const DEBUG = ENV === 'development';
+
+/**
+ * ✅ Utility Functions for Configurations
+ */
+
+// Function to check if a role has permission
+export const hasPermission = (role, permission) => {
+  const rolePermissions = {
+    admin: Object.keys(PERMISSIONS),
+    moderator: ['DELETE_ROOM', 'KICK_USER', 'SEND_MESSAGES'],
+    participant: ['SEND_MESSAGES'],
+    guest: [],
+  };
+  return rolePermissions[role]?.includes(permission) || false;
+};
+
+// Function to validate email format
+export const isValidEmail = (email) => REGEX_PATTERNS.EMAIL.test(email);
+
+// Function to validate username format
+export const isValidUsername = (username) => REGEX_PATTERNS.USERNAME.test(username);
+
+// Function to validate password strength
+export const isValidPassword = (password) => REGEX_PATTERNS.PASSWORD.test(password);
