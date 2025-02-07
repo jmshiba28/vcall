@@ -1,47 +1,6 @@
-// import {Routes,Route} from 'react-router-dom'
-// // import Home from './pages/home/home'
-// import Roompage from './pages/Room/index'
-
-// function App() {
-//   return (
-//     <Roompage/>
-//     // <Routes>
-//     //   {/* <Route path="/" element={<Home />}></Route> */}
-      
-//     //   <Route path="/room/1" element={<Roompage/>}></Route>
-
-//     // </Routes>
-   
-//   );
-// }
-
-// export default App;
-
-
-
-
-
-
-// import {Routes,Route} from 'react-router-dom'
-// import Home from './pages/home/home'
-// import Roompage from './pages/Room/index'
-// function App() {
-//   return (
-//     <Routes>
-//       <Route path="/" element={<Home />}></Route>
-//       <Route path="/room/:roomid" element={<Roompage />}></Route>
-
-//     </Routes>
-   
-//   );
-// }
-
-// export default App;
-
-
-
 import React, { Suspense, lazy, useContext, createContext, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from 'react-router-dom';
+import ProfilePage from './pages/ProfilePage';
 
 // Lazy Loaded Pages
 const LoginPage = lazy(() => import('./pages/LoginPage'));
@@ -49,7 +8,6 @@ const HomePage = lazy(() => import('./pages/HomePage'));
 const RoomPage = lazy(() => import('./pages/RoomPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
-const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 
 // Authentication Context
 const AuthContext = createContext(null);
@@ -133,6 +91,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Navigate to="/home" />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/profile" element={<ProfilePage />} /> {/* New Route */}
 
                 <Route element={<MainLayout />}>
                   <Route path="/home" element={<HomePage />} />
