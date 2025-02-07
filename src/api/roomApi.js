@@ -51,13 +51,26 @@ const socket = io(API_URL, {
   timeout: 10000,
 });
 
-export const listenForRoomUpdates = (roomId, callback) => {
-  socket.emit("joinRoom", roomId);
-  socket.on("roomUpdate", callback);
+// Emit an event to join a room
+export const joinRoom = (roomId, userName) => {
+  socket.emit('join-room', { roomId, userName });
 };
 
-export const stopListeningForRoomUpdates = (roomId) => {
-  socket.emit("leaveRoom", roomId);
+// Listen for messages from the server
+export const onMessage = (callback) => {
+  socket.on('message', (message) => {
+    callback(message);
+  });
+};
+
+// Send a message to the room
+export const sendMessage = (roomId, message) => {
+  socket.emit('send-message', { roomId, message });
+};
+
+// Handle disconnection
+export const disconnect = () => {
+  socket.disconnect();
 };
 
 // Fetch room details
@@ -72,7 +85,7 @@ export const getRoomDetails = async (roomId) => {
 };
 
 // Join a room
-export const joinRoom = async (roomId) => {
+export const joinRoomApi = async (roomId) => {
   try {
     const response = await apiClient.post(`/join/${roomId}`);
     return response.data;
@@ -89,17 +102,6 @@ export const leaveRoom = async (roomId) => {
     return response.data;
   } catch (error) {
     console.error("Error leaving room:", error.response?.data || error.message);
-    throw error;
-  }
-};
-
-// Send a message to a room
-export const sendMessage = async (roomId, message) => {
-  try {
-    const response = await apiClient.post(`/message/${roomId}`, { message });
-    return response.data;
-  } catch (error) {
-    console.error("Error sending message:", error.response?.data || error.message);
     throw error;
   }
 };
