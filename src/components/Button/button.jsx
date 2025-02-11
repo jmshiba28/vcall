@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import "../../styles/Button.css";
-import Loader from "../Loader"; // Adjust the path as necessary
+import "../../styles/global.css"; // Adjust the path to the global CSS file
+import Loader from "../LoadingSpinner/LoadingSpinner"; // Adjust the path to the Loader component
 
 const Button = ({
   onClick,
@@ -13,10 +13,10 @@ const Button = ({
   disabled = false,
 }) => {
   const [isClicked, setIsClicked] = useState(false);
+
   const handleClick = (e) => {
     if (disabled || isLoading) return;
     setIsClicked(true);
-    onClick(e);
   };
 
   return (
@@ -31,7 +31,6 @@ const Button = ({
         <Loader className="loader" size={18} />
       ) : (
         <>
-          <div className="loader" style={{ width: 18, height: 18 }}></div>
           {Icon && <Icon className="btn-icon" />}
           {label}
         </>
